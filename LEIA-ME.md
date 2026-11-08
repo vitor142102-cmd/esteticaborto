@@ -32,7 +32,8 @@ O site usa somente material da própria Street Detail, que fica na pasta `img/`:
 |---|---|
 | `logo.png` | Logo oficial sem o fundo preto (cabeçalho, intro, rodapé). `logo-s.png` é o ícone da aba. |
 | `gli-polido.jpg` | Hero interativo (o visitante "pole" o Jetta GLI) e galeria |
-| `video-street.mp4` | Fundo desfocado do hero, card de Polimento, galeria e chamada final |
+| `video-street.mp4` | Fundo desfocado do hero, card de Polimento, galeria e chamada final (capa: `video-poster.jpg`) |
+| `video-destaque.mp4` | Seção "Polimento em ação": 1 min de polimento do Jetta GLI, com som opcional e etapas sincronizadas (capa: `video-destaque-capa.jpg`). As etapas mudam aos 36 s, valor que fica em `ACTION_STEPS` no script. O vídeo só carrega quando o visitante chega perto da seção. |
 | `roda-antes.jpg` / `roda-depois.jpg` | Antes & Depois e card de Lavagem |
 | `moto-antes.jpg` / `moto-depois.jpg` | Antes & Depois e card de Motos |
 | `gts-carpro.jpg` | Card de Coating e galeria |
