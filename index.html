@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Street Detail | Estética Automotiva em Jaraguá</title>
+<meta name="description" content="Street Detail: lavagem premium detalhada, polimento técnico e coating cerâmico em Jaraguá. Agende pelo WhatsApp.">
+<meta property="og:title" content="Street Detail | Estética Automotiva">
+<meta property="og:description" content="Lavagem premium detalhada, polimento técnico e coating cerâmico.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#050506">
+<meta property="og:image" content="img/gli-polido.jpg">
+<link rel="icon" type="image/png" href="img/logo-s.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,800;1,900&family=Barlow:wght@400;500;600&family=Chakra+Petch:wght@500;600&display=swap" rel="stylesheet">
+
+<!-- Tailwind (Play CDN) -->
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          // Pintura preta polida + amarelo do logo + cromado
+          asphalt: '#050506',   // fundo: preto de pintura
+          carbon: '#0E0F11',    // superfícies
+          graphite: '#17181B',  // cartões
+          steel: '#26282C',     // bordas fortes
+          chrome: '#C9CCD2',    // texto secundário claro (cromado)
+          mist: '#8E9198',      // texto apagado
+          volt: '#FFC400',      // amarelo Street Detail
+          voltsoft: '#FFD95A',
+          voltdeep: '#D9A300',
+        },
+        fontFamily: {
+          display: ['"Barlow Condensed"', '"Arial Narrow"', 'sans-serif'],
+          sans: ['Barlow', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+          hud: ['"Chakra Petch"', 'ui-monospace', 'monospace'],
+        },
+        boxShadow: {
+          volt: '0 18px 50px -14px rgba(255,196,0,.55)',
+          deep: '0 40px 80px -40px rgba(0,0,0,.9)',
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  :root { color-scheme: dark; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  .lenis.lenis-stopped { overflow: hidden; }
+  body { background: #050506; color: #F4F4F5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  ::selection { background: #FFC400; color: #050506; }
+  h1, h2, h3 { text-wrap: balance; }
+  :focus-visible { outline: 2px solid #FFC400; outline-offset: 3px; border-radius: 6px; }
+
+  /* Tela de espera enquanto o React compila */
+  #boot { position: fixed; inset: 0; background: #050506; z-index: 300; }
+
+  /* Texto com reflexo passando (cromado/amarelo) */
+  .shine-volt {
+    background: linear-gradient(100deg, #D9A300 0%, #FFC400 28%, #FFF4C7 46%, #FFC400 60%, #D9A300 100%);
+    background-size: 250% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: shine 5s linear infinite;
+  }
+  .shine-chrome {
+    background: linear-gradient(100deg, #8E9198 0%, #F4F4F5 30%, #FFFFFF 45%, #9EA2A9 62%, #E6E7EA 100%);
+    background-size: 250% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: shine 7s linear infinite;
+  }
+  @keyframes shine { to { background-position: -250% 0; } }
+
+  .text-outline { -webkit-text-stroke: 1.5px rgba(255,255,255,.22); color: transparent; }
+  .text-outline-volt { -webkit-text-stroke: 1.5px #FFC400; color: transparent; }
+
+  /* Boina de polimento (cursor do hero) */
+  .pad { position: absolute; left: 0; top: 0; border-radius: 50%; pointer-events: none; opacity: 0; transition: opacity .25s; z-index: 5; will-change: transform; }
+  .pad::before { content: ""; position: absolute; inset: 0; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,196,0,.0) 58%, rgba(255,196,0,.9) 60%, #E0A800 68%, rgba(20,20,22,.95) 70%, rgba(20,20,22,.95) 76%, rgba(255,196,0,0) 78%);
+    box-shadow: 0 0 40px rgba(255,196,0,.35), inset 0 0 22px rgba(255,196,0,.25); }
+  .pad::after { content: ""; position: absolute; inset: 22%; border-radius: 50%;
+    background: repeating-conic-gradient(from 0deg, rgba(255,214,90,.55) 0 8deg, rgba(255,196,0,.08) 8deg 20deg);
+    animation: spin .35s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Faixa da estrada no processo */
+  .road-dash { background: repeating-linear-gradient(180deg, #FFC400 0 22px, transparent 22px 44px); }
+
+  .noise::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .05; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+</style>
+
+<!-- React + Framer Motion + Lenis (scroll suave) -->
+<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/framer-motion@11.11.17/dist/framer-motion.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.24.7/babel.min.js"></script>
+</head>
+<body class="font-sans">
+<div id="boot"></div>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useCallback } = React;
+const {
+  motion, AnimatePresence, MotionConfig, useScroll, useTransform, useSpring,
+  useMotionValue, useMotionValueEvent, useVelocity, useAnimationFrame,
+  useMotionTemplate, useReducedMotion, useInView, animate,
+} = window.Motion;
+
+/* ------------------------------------------------------------------ */
+/* Configuração — TROQUE AQUI                                          */
+/* ------------------------------------------------------------------ */
+const WHATSAPP = '5500000000000'; // 55 + DDD + número, só dígitos
+const INSTAGRAM = 'https://www.instagram.com/streetdetailjaragua/';
+const ENDERECO = 'Rua Exemplo, 123 — Jaraguá';       // TROCAR
+const HORARIO = ['Seg a Sex · 8h às 18h', 'Sáb · 8h às 12h']; // TROCAR
+
+const wa = (msg = 'Olá! Vim pelo site e gostaria de agendar um horário.') =>
+  `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+
+// Fotos e vídeo da própria Street Detail (pasta img/)
+const U = (src) => src;
+const IMG = {
+  logo: 'img/logo.png',
+  hero: 'img/gli-polido.jpg',             // Jetta GLI polido (hero interativo)
+  video: 'img/video-street.mp4',          // Porsche no estúdio, sob o varal de luzes
+  chevette: 'img/chevette-chassi.jpg',    // Chevette após lavagem de chassi
+  gts: 'img/gts-carpro.jpg',              // GTS com CARPRO Reload
+  bancos: 'img/interior-bancos.jpg',      // bancos em couro claro
+  painel: 'img/interior-painel.jpg',      // painel e console
+  rodaAntes: 'img/roda-antes.jpg',
+  rodaDepois: 'img/roda-depois.jpg',
+  motoAntes: 'img/moto-antes.jpg',
+  motoDepois: 'img/moto-depois.jpg',
+};
+
+// Vídeo de fundo silencioso e em loop
+const LoopVideo = React.forwardRef(({ className = '', ...rest }, ref) => (
+  <video ref={ref} src={IMG.video} autoPlay muted loop playsInline preload="auto" aria-hidden="true" className={className} {...rest} />
+));
+
+// Quem ativou "reduzir movimento" no sistema verá as animações mesmo assim (false).
+const RESPECT_REDUCED_MOTION = false;
+const useReduce = () => { const r = useReducedMotion(); return RESPECT_REDUCED_MOTION && !!r; };
+const ease = [0.22, 1, 0.36, 1];
+
+function useMedia(query) {
+  const [match, setMatch] = useState(() => window.matchMedia(query).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const on = () => setMatch(mq.matches);
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, [query]);
+  return match;
+}
+
+/* ------------------------------------------------------------------ */
+/* Ícones                                                              */
+/* ------------------------------------------------------------------ */
+const WhatsIcon = ({ className = 'h-5 w-5' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+);
+const InstaIcon = ({ className = 'h-5 w-5' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+);
+const Arrow = ({ className = 'h-4 w-4' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+);
+
+/* ------------------------------------------------------------------ */
+/* Peças reutilizáveis                                                 */
+/* ------------------------------------------------------------------ */
+function Logo({ size = 'md' }) {
+  const h = size === 'lg' ? 'h-28 md:h-36' : size === 'sm' ? 'h-10' : 'h-12 md:h-14';
+  return <img src={IMG.logo} alt="Street Detail" draggable="false" className={`${h} w-auto select-none`} />;
+}
+
+function Eyebrow({ children, className = '' }) {
+  return (
+    <p className={`flex items-center gap-3 font-hud text-[13px] font-semibold uppercase tracking-[.28em] text-volt ${className}`}>
+      <span className="h-[2px] w-8 bg-volt" />{children}
+    </p>
+  );
+}
+
+function Reveal({ children, delay = 0, y = 40, className = '', as = 'div' }) {
+  const M = motion[as];
+  return (
+    <M className={className} initial={{ opacity: 0, y }} whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.9, ease, delay }}>
+      {children}
+    </M>
+  );
+}
+
+// Palavras que sobem de dentro de uma máscara
+function RiseWords({ text, className = '', delay = 0, show = true, stagger = 0.07 }) {
+  const words = text.split(' ');
+  return words.map((w, i) => (
+    <span key={i} className="inline-block overflow-hidden align-bottom pb-[.06em] -mb-[.06em]">
+      <motion.span className={`inline-block ${className}`} initial={{ y: '110%' }}
+        animate={show ? { y: '0%' } : { y: '110%' }}
+        transition={{ duration: 1, ease, delay: delay + i * stagger }}>
+        {w}
+      </motion.span>
+      {i < words.length - 1 ? ' ' : ''}
+    </span>
+  ));
+}
+
+function Magnetic({ children, strength = 0.3, className = '' }) {
+  const ref = useRef(null);
+  const x = useSpring(0, { stiffness: 220, damping: 16 });
+  const y = useSpring(0, { stiffness: 220, damping: 16 });
+  return (
+    <motion.div ref={ref} style={{ x, y }} className={`inline-block ${className}`}
+      onPointerMove={(e) => {
+        if (e.pointerType !== 'mouse') return;
+        const r = ref.current.getBoundingClientRect();
+        x.set((e.clientX - (r.left + r.width / 2)) * strength);
+        y.set((e.clientY - (r.top + r.height / 2)) * strength);
+      }}
+      onPointerLeave={() => { x.set(0); y.set(0); }}>
+      {children}
+    </motion.div>
+  );
+}
+
+function BtnPrimary({ href, children, className = '', ...rest }) {
+  return (
+    <a href={href} target="_blank" rel="noopener"
+      className={`group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full bg-volt px-7 py-4 font-semibold text-asphalt shadow-volt transition-colors hover:bg-voltsoft ${className}`} {...rest}>
+      <span className="pointer-events-none absolute inset-0 -translate-x-[120%] bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-[120%]" />
+      <span className="relative inline-flex items-center gap-3">{children}</span>
+    </a>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Infra: scroll suave, barra de progresso, intro                      */
+/* ------------------------------------------------------------------ */
+function useSmoothScroll(enabled) {
+  useEffect(() => {
+    if (!enabled || !window.Lenis) return;
+    const lenis = new window.Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    window.__lenis = lenis;
+    let id;
+    const raf = (t) => { lenis.raf(t); id = requestAnimationFrame(raf); };
+    id = requestAnimationFrame(raf);
+    return () => { cancelAnimationFrame(id); lenis.destroy(); window.__lenis = null; };
+  }, [enabled]);
+
+  useEffect(() => {
+    const onClick = (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      const id = a.getAttribute('href');
+      const el = id === '#inicio' ? 0 : document.querySelector(id);
+      if (el === null) return;
+      e.preventDefault();
+      if (window.__lenis) window.__lenis.scrollTo(el, { offset: -70, duration: 1.6 });
+      else if (el === 0) window.scrollTo({ top: 0, behavior: 'smooth' });
+      else el.scrollIntoView({ behavior: 'smooth' });
+    };
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, []);
+}
+
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 30 });
+  return <motion.div style={{ scaleX }} className="fixed inset-x-0 top-0 z-[90] h-[3px] origin-left bg-volt shadow-volt" />;
+}
+
+function Intro({ show }) {
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div key="intro" className="fixed inset-0 z-[200] grid place-items-center bg-asphalt"
+          exit={{ clipPath: 'inset(0 0 100% 0)' }} initial={{ clipPath: 'inset(0 0 0% 0)' }}
+          transition={{ duration: 0.9, ease }}>
+          <div className="flex flex-col items-center">
+            <motion.div className="relative overflow-hidden px-2" initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, ease }}>
+              <Logo size="lg" />
+              <motion.span className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/50 to-transparent"
+                initial={{ x: '-120%' }} animate={{ x: '320%' }} transition={{ duration: 1.1, ease: 'easeInOut', delay: 0.35 }} />
+            </motion.div>
+            <div className="mt-8 h-[2px] w-56 overflow-hidden rounded-full bg-white/10">
+              <motion.div className="h-full bg-volt" initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ duration: 1.3, ease }} />
+            </div>
+            <motion.p className="mt-4 font-hud text-[11px] uppercase tracking-[.4em] text-mist"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+              Ligando os refletores
+            </motion.p>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Header                                                              */
+/* ------------------------------------------------------------------ */
+const NAV = [
+  ['#servicos', 'Serviços'],
+  ['#resultados', 'Antes & depois'],
+  ['#coating', 'Coating'],
+  ['#processo', 'Processo'],
+  ['#galeria', 'Galeria'],
+  ['#duvidas', 'Dúvidas'],
+];
+
+function Header({ ready }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, 'change', (v) => setScrolled(v > 30));
+  useEffect(() => {
+    if (window.__lenis) open ? window.__lenis.stop() : window.__lenis.start();
+    const k = (e) => e.key === 'Escape' && setOpen(false);
+    document.addEventListener('keydown', k);
+    return () => document.removeEventListener('keydown', k);
+  }, [open]);
+
+  return (
+    <>
+      <motion.header initial={{ y: -90 }} animate={{ y: ready ? 0 : -90 }} transition={{ duration: 0.9, ease, delay: 0.2 }}
+        className={`fixed inset-x-0 top-0 z-[80] transition-[background,border-color,backdrop-filter] duration-300 border-b ${scrolled || open ? 'bg-asphalt/80 backdrop-blur-xl border-white/[.07]' : 'border-transparent'}`}>
+        <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-5 md:px-8">
+          <a href="#inicio" aria-label="Street Detail, voltar ao início"><Logo /></a>
+          <nav className="hidden items-center gap-8 lg:flex" aria-label="Menu principal">
+            {NAV.map(([h, l]) => (
+              <a key={h} href={h} className="group relative font-medium text-chrome/80 transition-colors hover:text-white">
+                {l}
+                <span className="absolute -bottom-1.5 left-0 h-[2px] w-full origin-left scale-x-0 bg-volt transition-transform duration-300 group-hover:scale-x-100" />
+              </a>
+            ))}
+            <Magnetic><BtnPrimary href={wa()} className="!px-5 !py-2.5 text-sm">Agendar</BtnPrimary></Magnetic>
+          </nav>
+          <button onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="menu-mobile"
+            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+            className="relative grid h-11 w-11 place-items-center rounded-xl border border-white/10 bg-graphite lg:hidden">
+            <span className={`absolute h-[2px] w-5 bg-white transition-transform duration-300 ${open ? 'rotate-45' : '-translate-y-[6px]'}`} />
+            <span className={`absolute h-[2px] w-5 bg-white transition-opacity ${open ? 'opacity-0' : ''}`} />
+            <span className={`absolute h-[2px] w-5 bg-white transition-transform duration-300 ${open ? '-rotate-45' : 'translate-y-[6px]'}`} />
+          </button>
+        </div>
+      </motion.header>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div id="menu-mobile" className="fixed inset-0 z-[70] flex flex-col justify-between bg-asphalt px-6 pb-10 pt-28 lg:hidden"
+            initial={{ clipPath: 'circle(0% at 92% 36px)' }} animate={{ clipPath: 'circle(150% at 92% 36px)' }}
+            exit={{ clipPath: 'circle(0% at 92% 36px)' }} transition={{ duration: 0.6, ease }}>
+            <nav className="flex flex-col" aria-label="Menu">
+              {NAV.map(([h, l], i) => (
+                <motion.a key={h} href={h} onClick={() => setOpen(false)}
+                  initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 + i * 0.06, ease }}
+                  className="flex items-baseline gap-4 border-b border-white/[.07] py-4 font-display text-5xl font-extrabold uppercase italic text-white">
+                  <span className="font-hud text-xs not-italic text-volt">0{i + 1}</span>{l}
+                </motion.a>
+              ))}
+            </nav>
+            <BtnPrimary href={wa()} className="w-full"><WhatsIcon />Agendar pelo WhatsApp</BtnPrimary>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* HERO: o visitante "pole" o carro com o mouse                        */
+/* ------------------------------------------------------------------ */
+// cover = a foto preenche o painel inteiro (com foco em focus[x,y]); sem cover = carro recortado sobre fundo preto
+function PolishStage({ ready, mobile, onProgress, apiRef, className = '', src = IMG.hero, cover = false, focus = [0.5, 0.5], alt = '' }) {
+  const wrapRef = useRef(null);
+  const canvasRef = useRef(null);
+  const padRef = useRef(null);
+  const readyRef = useRef(ready);
+  const startDemoRef = useRef(() => {});
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => { readyRef.current = ready; if (ready) startDemoRef.current(); }, [ready]);
+
+  useEffect(() => {
+    const wrap = wrapRef.current, canvas = canvasRef.current, pad = padRef.current;
+    const ctx = canvas.getContext('2d');
+    const MS = 4; // a máscara de polimento roda em 1/4 da resolução
+    let W = 0, H = 0, dpr = 1, R = { x: 0, y: 0, w: 1, h: 1 };
+    let dull, gloss, lum, tmp, streak, mask, mctx;
+    let last = null, progress = 0, done = false, visible = true, raf = 0, loaded = false;
+    let demo = null, demoDone = false, finishing = null, needCheck = false, lastCheck = 0, lastReport = -1, touched = false;
+    const t0 = performance.now();
+    const padR = () => (mobile ? 42 : 60);
+    const mk = (w, h) => { const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(w)); c.height = Math.max(1, Math.round(h)); return c; };
+
+    pad.style.width = pad.style.height = padR() * 2 + 'px';
+
+    const img = new Image();
+    if (/^https?:\/\//.test(src)) img.crossOrigin = 'anonymous'; // fotos locais não precisam (e quebram no file://)
+    const area = () => (cover ? { x: 0, y: 0, w: W, h: H } : R);
+    img.onload = () => {
+      loaded = true; setup();
+      if (new URLSearchParams(location.search).has('polido')) { demoDone = true; finish(); return; } // teste
+      if (readyRef.current) startDemo();
+    };
+    img.onerror = () => setFailed(true);
+    img.src = src;
+
+    function place() {
+      const ar = img.naturalWidth / img.naturalHeight;
+      if (cover) {
+        const s = Math.max(W / img.naturalWidth, H / img.naturalHeight);
+        const dw = img.naturalWidth * s, dh = img.naturalHeight * s;
+        R = { w: dw, h: dh, x: (W - dw) * focus[0], y: (H - dh) * focus[1] };
+        return;
+      }
+      if (!mobile) {
+        let dw = W * 0.7, dh = dw / ar;
+        if (dh > H * 1.02) { dh = H * 1.02; dw = dh * ar; }
+        R = { w: dw, h: dh, x: W - dw + W * 0.03, y: H - dh * 0.97 };
+      } else {
+        const dw = W * 1.22, dh = dw / ar;
+        R = { w: dw, h: dh, x: (W - dw) / 2, y: (H - dh) / 2 };
+      }
+    }
+
+    function feather(c) {
+      const f = (x0, y0, x1, y1) => {
+        const g = c.createLinearGradient(x0, y0, x1, y1);
+        g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,1)');
+        c.globalCompositeOperation = 'destination-in'; c.fillStyle = g; c.fillRect(0, 0, W, H);
+      };
+      const fx = R.w * 0.12, fy = R.h * 0.14;
+      f(R.x, 0, R.x + fx, 0); f(R.x + R.w, 0, R.x + R.w - fx, 0);
+      f(0, R.y, 0, R.y + fy); f(0, R.y + R.h, 0, R.y + R.h - fy);
+      c.globalCompositeOperation = 'source-over';
+    }
+
+    function build() {
+      const draw = (c) => c.drawImage(img, R.x, R.y, R.w, R.h);
+      // Luminância amplificada: onde há lataria (para reflexos e riscos)
+      lum = mk(W, H); const l = lum.getContext('2d');
+      draw(l); l.globalCompositeOperation = 'saturation'; l.fillStyle = '#808080'; l.fillRect(0, 0, W, H);
+      const lum0 = mk(W, H); lum0.getContext('2d').drawImage(lum, 0, 0); // luminância sem amplificar
+      const cp = mk(W, H); const cpc = cp.getContext('2d');
+      for (let i = 0; i < 3; i++) { cpc.clearRect(0, 0, W, H); cpc.drawImage(lum, 0, 0); l.globalCompositeOperation = 'screen'; l.drawImage(cp, 0, 0); }
+      l.globalCompositeOperation = 'source-over';
+
+      // Versão polida: mais contraste e profundidade
+      gloss = mk(W, H); const g = gloss.getContext('2d');
+      draw(g); g.globalCompositeOperation = 'soft-light'; g.globalAlpha = 0.6; draw(g);
+      g.globalAlpha = 1; g.globalCompositeOperation = 'source-over'; if (!cover) feather(g);
+
+      // Versão "antes": sem cor, opaca, com véu e marcas circulares (swirls)
+      dull = mk(W, H); const d = dull.getContext('2d');
+      draw(d);
+      d.globalCompositeOperation = 'saturation'; d.globalAlpha = 0.8; d.fillStyle = '#808080'; d.fillRect(0, 0, W, H);
+      d.globalAlpha = 1; d.globalCompositeOperation = 'multiply'; d.fillStyle = 'rgb(128,126,122)'; d.fillRect(0, 0, W, H);
+      const small = mk(W / 22, H / 22); small.getContext('2d').drawImage(img, R.x / 22, R.y / 22, R.w / 22, R.h / 22);
+      d.globalCompositeOperation = 'screen'; d.globalAlpha = 0.65; d.imageSmoothingEnabled = true; d.drawImage(small, 0, 0, W, H);
+      const sw = mk(W, H); const s = sw.getContext('2d');
+      s.fillStyle = '#000'; s.fillRect(0, 0, W, H);
+      s.strokeStyle = 'rgba(255,255,255,.9)'; s.lineWidth = Math.max(1, dpr * 0.6);
+      for (let k = 0; k < 7; k++) {
+        const a = area();
+        const cx = a.x + a.w * (0.15 + Math.random() * 0.7), cy = a.y + a.h * (cover ? 0.12 + Math.random() * 0.7 : 0.45 + Math.random() * 0.35);
+        for (let r = 6 * dpr; r < a.w * 0.3; r += (4 + Math.random() * 5) * dpr) {
+          const a0 = Math.random() * Math.PI * 2;
+          s.beginPath(); s.arc(cx, cy, r, a0, a0 + 0.4 + Math.random() * 1.6); s.stroke();
+        }
+      }
+      // riscos só aparecem onde a luz bate na lataria, como na vida real
+      s.globalCompositeOperation = 'multiply'; s.drawImage(lum0, 0, 0); s.drawImage(lum0, 0, 0);
+      d.globalCompositeOperation = 'screen'; d.globalAlpha = 0.75; d.drawImage(sw, 0, 0);
+      d.globalAlpha = 1; d.globalCompositeOperation = 'source-over'; if (!cover) feather(d);
+
+      tmp = mk(W, H);
+      streak = mk(W / 2, H / 2);
+    }
+
+    function setup() {
+      const r = wrap.getBoundingClientRect();
+      if (!r.width || !loaded) return;
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      W = Math.round(r.width * dpr); H = Math.round(r.height * dpr);
+      canvas.width = W; canvas.height = H;
+      place(); build();
+      mask = mk(W / MS, H / MS); mctx = mask.getContext('2d');
+      if (done) { mctx.fillStyle = '#fff'; mctx.fillRect(0, 0, mask.width, mask.height); }
+      progress = done ? 1 : 0; last = null; report(true);
+    }
+
+    function report(force) {
+      const v = done ? 1 : Math.min(1, progress / 0.6);
+      const q = Math.round(v * 100);
+      if (force || q !== lastReport) { lastReport = q; onProgress && onProgress(q / 100); }
+    }
+
+    function stamp(x, y, radius) {
+      const r = (radius || padR()) * dpr / MS, px = x * dpr / MS, py = y * dpr / MS;
+      const g = mctx.createRadialGradient(px, py, 0, px, py, r);
+      g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.55, 'rgba(255,255,255,.85)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+      mctx.fillStyle = g; mctx.beginPath(); mctx.arc(px, py, r, 0, Math.PI * 2); mctx.fill();
+    }
+    function polishTo(x, y) {
+      if (!mctx) return;
+      if (last) {
+        const dx = x - last.x, dy = y - last.y, n = Math.ceil(Math.hypot(dx, dy) / (padR() * 0.3));
+        for (let i = 1; i <= n; i++) stamp(last.x + dx * i / n, last.y + dy * i / n);
+      } else stamp(x, y);
+      last = { x, y }; needCheck = true;
+    }
+    function measure() {
+      const a = area(), [ya, yb] = cover ? [0.08, 0.92] : [0.45, 0.82];
+      const x0 = Math.max(0, Math.floor((a.x + a.w * 0.08) / MS)), x1 = Math.min(mask.width, Math.ceil((a.x + a.w * 0.9) / MS));
+      const y0 = Math.max(0, Math.floor((a.y + a.h * ya) / MS)), y1 = Math.min(mask.height, Math.ceil((a.y + a.h * yb) / MS));
+      if (x1 <= x0 || y1 <= y0) return;
+      const d = mctx.getImageData(x0, y0, x1 - x0, y1 - y0).data;
+      let c = 0, n = 0;
+      for (let i = 3; i < d.length; i += 12) { n++; if (d[i] > 150) c++; }
+      progress = c / n; report();
+      if (!done && touched && progress >= 0.6) finish();
+    }
+    function finish() {
+      if (done || !mctx) return;
+      done = true;
+      const a = area();
+      const from = last || { x: (a.x + a.w * 0.5) / dpr, y: (a.y + a.h * (cover ? 0.45 : 0.62)) / dpr };
+      finishing = { t: performance.now(), x: from.x, y: from.y };
+    }
+    function reset() {
+      done = false; finishing = null; progress = 0; last = null;
+      if (mctx) mctx.clearRect(0, 0, mask.width, mask.height);
+      report(true);
+    }
+
+    const movePad = (x, y) => { const r = padR(); pad.style.transform = `translate3d(${x - r}px, ${y - r}px, 0)`; pad.style.opacity = '1'; };
+    const hidePad = () => { pad.style.opacity = '0'; };
+
+    function startDemo() {
+      if (!loaded || demoDone) return;
+      demoDone = true; demo = { t: performance.now() + 250 }; last = null;
+    }
+    startDemoRef.current = startDemo;
+
+    function frame(now) {
+      raf = requestAnimationFrame(frame);
+      if (!loaded || !visible || !W) return;
+      if (demo && now >= demo.t) {
+        // Demonstração: pole só a metade traseira, para mostrar o antes e depois lado a lado
+        const k = (now - demo.t) / 2400;
+        if (k >= 1) { demo = null; last = null; hidePad(); needCheck = true; }
+        else {
+          const a = area();
+          const x = (a.x + a.w * (0.1 + (cover ? 0.42 : 0.36) * k)) / dpr;
+          const y = (a.y + a.h * ((cover ? 0.42 : 0.62) + (cover ? 0.16 : 0.08) * Math.sin(k * Math.PI * 5))) / dpr;
+          movePad(x, y); polishTo(x, y);
+        }
+      }
+      if (finishing) {
+        const k = Math.min(1, (now - finishing.t) / 1100), e = 1 - Math.pow(1 - k, 3);
+        stamp(finishing.x, finishing.y, (Math.hypot(W, H) / dpr) * e + 40);
+        if (k >= 1) { mctx.fillStyle = '#fff'; mctx.fillRect(0, 0, mask.width, mask.height); finishing = null; report(true); }
+      }
+
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.clearRect(0, 0, W, H);
+      ctx.drawImage(dull, 0, 0);
+
+      const t = tmp.getContext('2d');
+      t.globalCompositeOperation = 'source-over'; t.clearRect(0, 0, W, H); t.drawImage(gloss, 0, 0);
+      // Reflexo de luz correndo pela lataria polida
+      const s = streak.getContext('2d'), sw = streak.width, sh = streak.height;
+      const ph = ((now - t0) / 4200) % 1, cx = (R.x - R.w * 0.3 + ph * R.w * 1.6) / 2;
+      s.globalCompositeOperation = 'source-over'; s.fillStyle = '#000'; s.fillRect(0, 0, sw, sh);
+      const gr = s.createLinearGradient(cx - R.w * 0.08, 0, cx + R.w * 0.08, R.h * 0.12);
+      gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(0.5, 'rgba(255,248,225,1)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+      s.fillStyle = gr; s.fillRect(0, 0, sw, sh);
+      s.globalCompositeOperation = 'multiply'; s.drawImage(lum, 0, 0, sw, sh);
+      t.globalCompositeOperation = 'screen'; t.globalAlpha = cover ? 0.3 : 0.55; t.drawImage(streak, 0, 0, W, H); t.globalAlpha = 1;
+      t.globalCompositeOperation = 'destination-in'; t.drawImage(mask, 0, 0, W, H);
+      ctx.drawImage(tmp, 0, 0);
+
+      if (needCheck && now - lastCheck > 160) { lastCheck = now; needCheck = false; measure(); }
+    }
+    raf = requestAnimationFrame(frame);
+
+    const local = (e) => { const r = wrap.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+    const onMove = (e) => {
+      if (e.pointerType !== 'mouse' && !e.buttons) return;
+      const [x, y] = local(e);
+      if (demo) { demo = null; last = null; }
+      touched = true;
+      movePad(x, y);
+      if (!done) polishTo(x, y);
+    };
+    const onDown = (e) => { last = null; onMove(e); };
+    const onLeave = () => { last = null; if (!demo) hidePad(); };
+    const onUp = (e) => { if (e.pointerType !== 'mouse') onLeave(); };
+    wrap.addEventListener('pointermove', onMove);
+    wrap.addEventListener('pointerdown', onDown);
+    wrap.addEventListener('pointerleave', onLeave);
+    wrap.addEventListener('pointerup', onUp);
+    wrap.addEventListener('pointercancel', onLeave);
+
+    let to;
+    const ro = new ResizeObserver(() => { clearTimeout(to); to = setTimeout(setup, 120); });
+    ro.observe(wrap);
+    const io = new IntersectionObserver(([en]) => { visible = en.isIntersecting; }, { threshold: 0 });
+    io.observe(wrap);
+
+    if (apiRef) apiRef.current = { finish, reset };
+
+    return () => {
+      cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); clearTimeout(to);
+      wrap.removeEventListener('pointermove', onMove); wrap.removeEventListener('pointerdown', onDown);
+      wrap.removeEventListener('pointerleave', onLeave); wrap.removeEventListener('pointerup', onUp);
+      wrap.removeEventListener('pointercancel', onLeave);
+    };
+  }, [mobile, src, cover]);
+
+  return (
+    <div ref={wrapRef} className={`relative touch-pan-y select-none ${mobile ? '' : 'cursor-none'} ${className}`}>
+      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-label={`${alt}: passe o mouse para polir a pintura`} role="img" />
+      {failed && (
+        <img src={src} alt={alt} className={`absolute inset-0 h-full w-full ${cover ? 'object-cover' : 'object-contain object-right-bottom'}`} />
+      )}
+      <div ref={padRef} className="pad" aria-hidden="true" />
+    </div>
+  );
+}
+
+function polar(a, r, c = 100) { const t = (a * Math.PI) / 180; return [c + r * Math.sin(t), c - r * Math.cos(t)]; }
+
+// Conta-giros que mede o brilho
+function GlossGauge({ value }) {
+  const v = useSpring(0, { stiffness: 70, damping: 16 });
+  const needleRef = useRef(null);
+  const [pct, setPct] = useState(0);
+  useEffect(() => { v.set(value); }, [value]);
+  useMotionValueEvent(v, 'change', (x) => {
+    setPct(Math.round(x * 100));
+    if (needleRef.current) needleRef.current.setAttribute('transform', `rotate(${-120 + x * 240} 100 100)`);
+  });
+  const [sx, sy] = polar(-120, 78), [ex, ey] = polar(120, 78);
+  const arc = `M ${sx} ${sy} A 78 78 0 1 1 ${ex} ${ey}`;
+  return (
+    <svg viewBox="0 0 200 150" className="w-full" aria-hidden="true">
+      <path d={arc} fill="none" stroke="rgba(255,255,255,.08)" strokeWidth="10" strokeLinecap="round" />
+      <motion.path d={arc} fill="none" stroke="#FFC400" strokeWidth="10" strokeLinecap="round" style={{ pathLength: v }}
+        filter="drop-shadow(0 0 6px rgba(255,196,0,.6))" />
+      {Array.from({ length: 21 }).map((_, i) => {
+        const a = -120 + i * 12, major = i % 5 === 0;
+        const [x1, y1] = polar(a, major ? 62 : 66), [x2, y2] = polar(a, 70);
+        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={i >= 15 ? '#FFC400' : 'rgba(255,255,255,.45)'} strokeWidth={major ? 2.2 : 1.2} />;
+      })}
+      {[0, 25, 50, 75, 100].map((n, i) => {
+        const [x, y] = polar(-120 + i * 60, 50);
+        return <text key={n} x={x} y={y + 3} textAnchor="middle" fill="rgba(255,255,255,.45)" fontSize="9" fontFamily="Chakra Petch">{n}</text>;
+      })}
+      <g ref={needleRef} transform="rotate(-120 100 100)">
+        <line x1="100" y1="108" x2="100" y2="34" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" />
+      </g>
+      <circle cx="100" cy="100" r="7" fill="#FFC400" />
+      <circle cx="100" cy="100" r="3" fill="#050506" />
+      <text x="100" y="138" textAnchor="middle" fill="#fff" fontSize="22" fontWeight="600" fontFamily="Chakra Petch">{pct}<tspan fontSize="12" fill="#FFC400">%</tspan></text>
+    </svg>
+  );
+}
+
+function PolishHud({ progress, onFinish, onReset, fine }) {
+  const done = progress >= 1;
+  const status = done ? 'Brilho de showroom' : progress > 0.02 ? 'Corrigindo a pintura…' : 'Pintura sem correção';
+  return (
+    <div className="flex w-full max-w-[420px] items-center gap-4 rounded-2xl border border-white/10 bg-black/55 p-3 pr-4 backdrop-blur-md">
+      <div className="w-[118px] shrink-0"><GlossGauge value={progress} /></div>
+      <div className="min-w-0 flex-1">
+        <p className="font-hud text-[10px] uppercase tracking-[.3em] text-mist">Medidor de brilho</p>
+        <p className={`mt-1 font-display text-xl font-bold uppercase leading-tight ${done ? 'text-volt' : 'text-white'}`}>{status}</p>
+        <p className="mt-1 text-[13px] leading-snug text-mist">
+          {done ? 'Esse é o resultado que seu carro pode ter.' : fine ? 'Passe o mouse sobre o carro para polir.' : 'Deslize o dedo sobre o carro para polir.'}
+        </p>
+        <div className="mt-2.5">
+          {done
+            ? <button onClick={onReset} className="font-hud text-[11px] uppercase tracking-[.2em] text-chrome underline decoration-volt underline-offset-4 hover:text-white">Sujar de novo</button>
+            : <button onClick={onFinish} className="font-hud text-[11px] uppercase tracking-[.2em] text-volt hover:text-voltsoft">Polir tudo →</button>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Hero({ ready }) {
+  const desktop = useMedia('(min-width: 1024px)');
+  const fine = useMedia('(pointer: fine)');
+  const [progress, setProgress] = useState(0);
+  const api = useRef(null);
+  const done = progress >= 1;
+
+  const copy = (
+    <>
+      <motion.div initial={{ opacity: 0, y: 16 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease, delay: 0.1 }}>
+        <Eyebrow>Estética automotiva · Jaraguá</Eyebrow>
+      </motion.div>
+      <h1 className="mt-6 font-display font-black uppercase leading-[.86] tracking-[-.01em] text-[clamp(60px,17vw,148px)] lg:text-[clamp(76px,7.6vw,132px)]">
+        <span className="block text-white"><RiseWords text="Brilho de" show={ready} delay={0.2} /></span>
+        <span className="block italic"><RiseWords text="showroom." show={ready} delay={0.36} className="shine-volt pr-[.08em]" /></span>
+      </h1>
+      <motion.p initial={{ opacity: 0, y: 20 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.9, ease, delay: 0.6 }}
+        className="mt-6 max-w-[34ch] text-lg leading-relaxed text-chrome/85 md:text-xl">
+        Lavagem premium detalhada, polimento técnico e coating cerâmico. Seu carro tratado com técnica, tempo e produto profissional.
+      </motion.p>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.9, ease, delay: 0.75 }}
+        className="pointer-events-auto mt-9 flex flex-wrap items-center gap-3">
+        <Magnetic><BtnPrimary href={wa('Olá! Vim pelo site e gostaria de um orçamento para o meu carro.')}><WhatsIcon />Agendar pelo WhatsApp</BtnPrimary></Magnetic>
+        <a href="#servicos" className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-4 font-semibold text-white transition-colors hover:border-volt hover:text-volt">
+          Ver serviços <Arrow />
+        </a>
+      </motion.div>
+    </>
+  );
+
+  const hud = (
+    <motion.div initial={{ opacity: 0, y: 24 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.9, ease, delay: 1 }}
+      className="pointer-events-auto">
+      <PolishHud progress={progress} fine={fine} onFinish={() => api.current?.finish()} onReset={() => api.current?.reset()} />
+    </motion.div>
+  );
+
+  const stage = (
+    <div className="relative">
+      <PolishStage ready={ready} mobile={!desktop} onProgress={setProgress} apiRef={api} cover focus={[0.5, 0.35]}
+        alt="VW Jetta GLI branco no estúdio da Street Detail"
+        className="h-[min(80vh,780px)] min-h-[520px] w-full overflow-hidden rounded-[32px] border border-white/10 bg-carbon shadow-deep max-lg:aspect-[4/5] max-lg:h-auto max-lg:min-h-0" />
+      <AnimatePresence>
+        {done && (
+          <motion.div key="flash" aria-hidden="true" className="pointer-events-none absolute inset-0 z-[6] overflow-hidden rounded-[32px]">
+            <motion.div className="h-full w-1/2 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+              initial={{ x: '-100%' }} animate={{ x: '250%' }} transition={{ duration: 1.1, ease: 'easeInOut' }} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <div className="pointer-events-none absolute left-4 top-4 z-10 flex items-center gap-2 rounded-full border border-white/15 bg-black/55 px-3 py-1.5 backdrop-blur">
+        <span className="h-1.5 w-1.5 rounded-full bg-volt" />
+        <span className="font-hud text-[11px] uppercase tracking-[.22em] text-white">Jetta GLI · na Street</span>
+      </div>
+      <AnimatePresence>
+        {progress < 0.75 && (
+          <motion.div key="hint" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} transition={{ delay: ready ? 2.6 : 0 }}
+            className="pointer-events-none absolute bottom-4 right-4 z-10 flex items-center gap-2 rounded-full bg-volt px-4 py-2 text-asphalt shadow-volt">
+            <span className="relative grid h-4 w-4 place-items-center"><span className="absolute h-full w-full animate-ping rounded-full bg-asphalt/40" /><span className="h-2 w-2 rounded-full bg-asphalt" /></span>
+            <span className="font-hud text-[11px] font-semibold uppercase tracking-[.18em]">{fine ? 'Passe o mouse para polir' : 'Deslize para polir'}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+
+  return (
+    <section id="inicio" className="noise relative overflow-hidden bg-asphalt">
+      {/* o estúdio da Street ao fundo, desfocado */}
+      <LoopVideo className="pointer-events-none absolute inset-0 h-full w-full scale-125 object-cover opacity-35 blur-2xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-b from-asphalt/30 via-asphalt/75 to-asphalt" />
+
+      {desktop ? (
+        <div className="relative mx-auto grid min-h-[clamp(720px,100vh,1000px)] max-w-[1280px] grid-cols-12 items-center gap-12 px-8 pb-16 pt-28">
+          <div className="pointer-events-none relative z-10 col-span-6">
+            {copy}
+            <div className="mt-10">{hud}</div>
+          </div>
+          <motion.div className="col-span-6" initial={{ opacity: 0, y: 50, rotate: 1.5 }} animate={ready ? { opacity: 1, y: 0, rotate: 0 } : {}} transition={{ duration: 1.3, ease, delay: 0.15 }}>
+            {stage}
+          </motion.div>
+        </div>
+      ) : (
+        <div className="relative px-5 pb-14 pt-28">
+          <div className="relative z-10">{copy}</div>
+          <motion.div className="mt-10" initial={{ opacity: 0, y: 40 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 1.2, ease, delay: 0.3 }}>
+            {stage}
+          </motion.div>
+          <div className="relative z-10 mt-5">{hud}</div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Faixa que acelera com a velocidade do scroll                        */
+/* ------------------------------------------------------------------ */
+const wrapRange = (min, max, v) => { const r = max - min; return ((((v - min) % r) + r) % r) + min; };
+
+function VelocityRow({ children, base = -2, className = '' }) {
+  const baseX = useMotionValue(0);
+  const { scrollY } = useScroll();
+  const vel = useVelocity(scrollY);
+  const smooth = useSpring(vel, { damping: 50, stiffness: 400 });
+  const factor = useTransform(smooth, [0, 1000], [0, 4], { clamp: false });
+  const x = useTransform(baseX, (v) => `${wrapRange(-25, -50, v)}%`);
+  const dir = useRef(1);
+  useAnimationFrame((t, delta) => {
+    let move = dir.current * base * (delta / 1000);
+    if (factor.get() < 0) dir.current = -1; else if (factor.get() > 0) dir.current = 1;
+    move += dir.current * move * factor.get();
+    baseX.set(baseX.get() + move);
+  });
+  return (
+    <div className="flex overflow-hidden whitespace-nowrap">
+      <motion.div className={`flex whitespace-nowrap ${className}`} style={{ x }}>
+        {[0, 1, 2, 3].map((i) => <span key={i} className="flex shrink-0 items-center">{children}</span>)}
+      </motion.div>
+    </div>
+  );
+}
+
+function SpeedStrip() {
+  const words = ['Lavagem premium', 'Polimento técnico', 'Coating cerâmico', 'Detalhamento'];
+  return (
+    <div aria-hidden="true" className="relative z-20 -my-2 overflow-x-clip py-6">
+      <div className="-rotate-[2deg] scale-[1.03] bg-volt py-4 text-asphalt shadow-volt">
+        <VelocityRow base={-2.2} className="font-display text-4xl font-black uppercase italic md:text-5xl">
+          {words.map((w) => (<React.Fragment key={w}><span className="px-6">{w}</span><span className="text-2xl">◆</span></React.Fragment>))}
+        </VelocityRow>
+      </div>
+      <div className="mt-3 rotate-[1deg] scale-[1.03] py-1">
+        <VelocityRow base={1.6} className="font-display text-4xl font-black uppercase md:text-5xl">
+          {words.map((w) => (<React.Fragment key={w}><span className="text-outline px-6">{w}</span><span className="text-xl text-volt/60">◆</span></React.Fragment>))}
+        </VelocityRow>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Serviços                                                            */
+/* ------------------------------------------------------------------ */
+const SERVICES = [
+  {
+    kicker: 'Lavagem', title: 'Lavagem Premium Detalhada', img: IMG.rodaDepois,
+    alt: 'Roda e pneu limpos depois da lavagem detalhada na Street Detail',
+    text: 'Muito além da lavagem comum. Pintura, rodas, caixas de roda, frisos e acabamentos limpos com técnica que preserva o verniz.',
+    items: ['Rodas e caixas de roda por dentro', 'Frisos, emblemas e acabamentos', 'Lavagem de chassi'],
+    msg: 'Olá! Gostaria de um orçamento de Lavagem Premium Detalhada.',
+  },
+  {
+    kicker: 'Correção', title: 'Polimento Técnico', video: true,
+    alt: 'Porsche com a pintura refletindo as luzes do estúdio da Street Detail',
+    text: 'Correção da pintura em etapas para tirar riscos superficiais, swirls e oxidação. A cor volta mais viva e o reflexo, nítido.',
+    items: ['Inspeção com luz dedicada', 'Corte, refino e lustro', 'Reflexo de espelho'],
+    msg: 'Olá! Gostaria de um orçamento de Polimento Técnico.',
+  },
+  {
+    kicker: 'Proteção', title: 'Coating Cerâmico', img: IMG.gts,
+    alt: 'Traseira de um VW GTS com toalha de microfibra e CARPRO Reload',
+    text: 'Uma camada rígida sobre o verniz que repele água e sujeira, facilita a limpeza e mantém o brilho por muito mais tempo.',
+    items: ['Efeito hidrofóbico', 'Proteção contra UV e contaminantes', 'Manutenção mais fácil'],
+    msg: 'Olá! Gostaria de um orçamento de Coating Cerâmico.',
+  },
+];
+
+const EXTRAS = [
+  { title: 'Interior', img: IMG.bancos, alt: 'Bancos de couro claro limpos', text: 'Bancos, painel e acabamentos internos limpos com o produto certo para cada material.', msg: 'Olá! Gostaria de um orçamento de limpeza interna.' },
+  { title: 'Lavagem de chassi', img: IMG.chevette, alt: 'Chevette azul no elevador após lavagem de chassi', pos: '50% 70%', text: 'Remoção do barro e da sujeira acumulada por baixo do carro, inclusive em clássicos.', msg: 'Olá! Gostaria de um orçamento de lavagem de chassi.' },
+  { title: 'Motos', img: IMG.motoDepois, alt: 'Aro raiado de moto limpo e brilhando', text: 'Aros, raios e cromados limpos e com brilho, com o mesmo cuidado dos carros.', msg: 'Olá! Gostaria de um orçamento para a minha moto.' },
+];
+
+function ServiceCard({ s, i, tilt }) {
+  const ref = useRef(null);
+  const mx = useMotionValue(0.5), my = useMotionValue(0.5);
+  const rx = useSpring(useTransform(my, [0, 1], [6, -6]), { stiffness: 160, damping: 18 });
+  const ry = useSpring(useTransform(mx, [0, 1], [-6, 6]), { stiffness: 160, damping: 18 });
+  const gx = useTransform(mx, (v) => v * 100), gy = useTransform(my, (v) => v * 100);
+  const glare = useMotionTemplate`radial-gradient(520px circle at ${gx}% ${gy}%, rgba(255,196,0,.22), transparent 45%)`;
+  return (
+    <Reveal delay={i * 0.12} y={60}>
+      <motion.article ref={ref}
+        style={tilt ? { rotateX: rx, rotateY: ry, transformPerspective: 1100 } : undefined}
+        onPointerMove={(e) => { if (!tilt) return; const r = ref.current.getBoundingClientRect(); mx.set((e.clientX - r.left) / r.width); my.set((e.clientY - r.top) / r.height); }}
+        onPointerLeave={() => { mx.set(0.5); my.set(0.5); }}
+        className="group relative flex min-h-[560px] flex-col justify-end overflow-hidden rounded-[28px] border border-white/[.08] bg-graphite shadow-deep lg:min-h-[640px]">
+        {s.video
+          ? <LoopVideo className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-110" />
+          : <img src={s.img} alt={s.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-110" />}
+        <div className="absolute inset-0 bg-gradient-to-t from-asphalt via-asphalt/75 to-asphalt/10" />
+        {tilt && <motion.div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: glare }} />}
+        <div className="absolute left-6 top-6 flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-3 py-1.5 backdrop-blur">
+          <span className="h-1.5 w-1.5 rounded-full bg-volt" />
+          <span className="font-hud text-[11px] uppercase tracking-[.25em] text-white">{s.kicker}</span>
+        </div>
+        <div className="relative p-7 md:p-8">
+          <h3 className="font-display text-[40px] font-extrabold uppercase leading-[.92] text-white">{s.title}</h3>
+          <p className="mt-4 text-[15.5px] leading-relaxed text-chrome/85">{s.text}</p>
+          <div className="grid grid-rows-[1fr] transition-[grid-template-rows] duration-500 lg:grid-rows-[0fr] lg:group-hover:grid-rows-[1fr] lg:group-focus-within:grid-rows-[1fr]">
+            <ul className="overflow-hidden">
+              {s.items.map((it) => (
+                <li key={it} className="flex items-center gap-3 border-t border-white/10 py-2.5 text-[15px] text-white first:mt-5">
+                  <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-volt" fill="none" stroke="currentColor" strokeWidth="3"><path d="m5 12 5 5L20 7" /></svg>{it}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <a href={wa(s.msg)} target="_blank" rel="noopener"
+            className="mt-6 inline-flex items-center gap-2 font-semibold text-volt">
+            Quero orçamento <span className="transition-transform duration-300 group-hover:translate-x-1.5"><Arrow /></span>
+          </a>
+        </div>
+      </motion.article>
+    </Reveal>
+  );
+}
+
+function Services() {
+  const tilt = useMedia('(pointer: fine) and (min-width: 1024px)');
+  return (
+    <section id="servicos" className="relative py-28 md:py-36">
+      <div className="mx-auto max-w-[1280px] px-5 md:px-8">
+        <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+          <div>
+            <Reveal><Eyebrow>Serviços</Eyebrow></Reveal>
+            <h2 className="mt-5 font-display text-[clamp(48px,7vw,96px)] font-black uppercase leading-[.88] text-white">
+              <Reveal as="span" className="block">Do primeiro jato</Reveal>
+              <Reveal as="span" delay={0.1} className="block"><span className="shine-chrome">ao último reflexo.</span></Reveal>
+            </h2>
+          </div>
+          <Reveal delay={0.2} className="max-w-[40ch] text-lg leading-relaxed text-mist">
+            Todo serviço começa com uma avaliação do carro. Assim você sabe exatamente o que será feito, e por quê.
+          </Reveal>
+        </div>
+        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {SERVICES.map((s, i) => <ServiceCard key={s.title} s={s} i={i} tilt={tilt} />)}
+        </div>
+        <Reveal className="mt-16 flex items-center gap-4">
+          <p className="font-hud text-[12px] font-semibold uppercase tracking-[.3em] text-mist">Também fazemos</p>
+          <span className="h-px flex-1 bg-white/10" />
+        </Reveal>
+        <div className="mt-6 grid gap-5 md:grid-cols-3">
+          {EXTRAS.map((x, i) => (
+            <Reveal key={x.title} delay={i * 0.08}>
+              <a href={wa(x.msg)} target="_blank" rel="noopener"
+                className="group flex h-full items-stretch overflow-hidden rounded-3xl border border-white/[.08] bg-graphite transition-colors hover:border-volt/40">
+                <div className="relative w-[38%] shrink-0 overflow-hidden">
+                  <img src={x.img} alt={x.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" style={{ objectPosition: x.pos || 'center' }} />
+                </div>
+                <div className="flex min-w-0 flex-1 flex-col justify-between gap-4 p-5">
+                  <div>
+                    <h3 className="font-display text-[26px] font-extrabold uppercase leading-none text-white">{x.title}</h3>
+                    <p className="mt-2 text-[14.5px] leading-snug text-mist">{x.text}</p>
+                  </div>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-volt">Orçamento <span className="transition-transform duration-300 group-hover:translate-x-1"><Arrow /></span></span>
+                </div>
+              </a>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Antes & depois com fotos reais (arrastar para comparar)             */
+/* ------------------------------------------------------------------ */
+const PAIRS = [
+  { id: 'roda', label: 'Roda e caixa de roda', before: IMG.rodaAntes, after: IMG.rodaDepois, ratio: '640 / 566',
+    note: 'Barro, fuligem de freio e sujeira da caixa de roda removidos. O pneu ganha acabamento e a roda volta a brilhar.' },
+  { id: 'moto', label: 'Aro de moto', before: IMG.motoAntes, after: IMG.motoDepois, ratio: '640 / 428',
+    note: 'Aro raiado, raios e cubo limpos, com o brilho do metal de volta.' },
+];
+
+function BeforeAfter() {
+  const [tab, setTab] = useState(0);
+  const p = PAIRS[tab];
+  const pos = useMotionValue(50);
+  const clip = useMotionTemplate`inset(0 0 0 ${pos}%)`;
+  const left = useMotionTemplate`${pos}%`;
+  const box = useRef(null), range = useRef(null);
+  const inView = useInView(box, { once: true, margin: '-25% 0px -25% 0px' });
+  useMotionValueEvent(pos, 'change', (v) => { if (range.current) range.current.value = v; });
+  useEffect(() => {
+    if (!inView) return;
+    const c = animate(pos, [94, 10, 50], { duration: 2.6, ease: 'easeInOut', times: [0, 0.55, 1] });
+    return () => c.stop();
+  }, [inView, tab]);
+
+  return (
+    <section id="resultados" className="relative overflow-x-clip py-28 md:py-36">
+      <div className="mx-auto grid max-w-[1280px] items-center gap-12 px-5 md:px-8 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <Reveal><Eyebrow>Antes &amp; depois</Eyebrow></Reveal>
+          <h2 className="mt-5 font-display text-[clamp(46px,6.4vw,88px)] font-black uppercase leading-[.88] text-white">
+            <Reveal as="span" className="block">Resultado</Reveal>
+            <Reveal as="span" delay={0.1} className="block italic text-volt">de verdade.</Reveal>
+          </h2>
+          <Reveal delay={0.15} className="mt-6 max-w-[40ch] text-lg leading-relaxed text-mist">
+            Fotos reais de serviços feitos na Street Detail. Arraste a barra para comparar.
+          </Reveal>
+          <Reveal delay={0.2} className="mt-8 flex flex-wrap gap-2" >
+            {PAIRS.map((x, i) => (
+              <button key={x.id} onClick={() => setTab(i)} aria-pressed={tab === i}
+                className={`rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors ${tab === i ? 'border-volt bg-volt text-asphalt' : 'border-white/15 text-chrome hover:border-white/40 hover:text-white'}`}>
+                {x.label}
+              </button>
+            ))}
+          </Reveal>
+          <AnimatePresence mode="wait">
+            <motion.p key={p.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.35 }}
+              className="mt-6 max-w-[44ch] border-l-2 border-volt pl-4 text-[15.5px] leading-relaxed text-chrome/85">
+              {p.note}
+            </motion.p>
+          </AnimatePresence>
+        </div>
+
+        <Reveal delay={0.1} y={60} className="lg:col-span-7">
+          <div ref={box} className="relative mx-auto w-full max-w-[760px] select-none overflow-hidden rounded-[28px] border border-white/10 bg-graphite shadow-deep transition-[aspect-ratio] duration-500" style={{ aspectRatio: p.ratio }}>
+            <AnimatePresence initial={false}>
+              <motion.div key={p.id} className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.45 }}>
+                <img src={p.before} alt={`${p.label}: antes`} className="absolute inset-0 h-full w-full object-cover" draggable="false" />
+                <motion.img src={p.after} alt={`${p.label}: depois`} style={{ clipPath: clip }} className="absolute inset-0 h-full w-full object-cover" draggable="false" />
+              </motion.div>
+            </AnimatePresence>
+            <span className="pointer-events-none absolute left-4 top-4 z-10 rounded-full bg-black/65 px-3 py-1.5 font-hud text-[11px] uppercase tracking-[.22em] text-white backdrop-blur">Antes</span>
+            <span className="pointer-events-none absolute right-4 top-4 z-10 rounded-full bg-volt px-3 py-1.5 font-hud text-[11px] font-semibold uppercase tracking-[.22em] text-asphalt">Depois</span>
+            <motion.div aria-hidden="true" style={{ left }} className="pointer-events-none absolute inset-y-0 z-10 w-[3px] -translate-x-1/2 bg-volt shadow-[0_0_18px_rgba(255,196,0,.8)]">
+              <span className="absolute left-1/2 top-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-volt text-asphalt shadow-[0_8px_24px_rgba(0,0,0,.5)]">
+                <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="m9 6-6 6 6 6M15 6l6 6-6 6" /></svg>
+              </span>
+            </motion.div>
+            <input ref={range} id="comparar" type="range" min="0" max="100" step="0.1" defaultValue="50" aria-label="Comparar antes e depois"
+              onInput={(e) => pos.set(+e.target.value)}
+              className="absolute inset-0 z-20 h-full w-full cursor-ew-resize opacity-0" />
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Coating: gotas de água que fogem do cursor                          */
+/* ------------------------------------------------------------------ */
+function WaterBeads({ className = '' }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const canvas = ref.current, ctx = canvas.getContext('2d');
+    let W = 0, H = 0, dpr = 1, drops = [], bg, raf = 0, visible = true;
+    let mouse = { x: -9999, y: -9999, t: 0 };
+    const rand = (a, b) => a + Math.random() * (b - a);
+    const newDrop = (top) => {
+      const big = Math.random() < 0.18;
+      const r = (big ? rand(8, 15) : rand(2.2, 7)) * dpr;
+      return { x: rand(0, W), y: top ? rand(-H * 0.3, -r) : rand(0, H), r, vx: 0, vy: 0, w: rand(0.85, 1.1) };
+    };
+    function setup() {
+      const rc = canvas.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = canvas.width = Math.round(rc.width * dpr); H = canvas.height = Math.round(rc.height * dpr);
+      bg = document.createElement('canvas'); bg.width = W; bg.height = H;
+      const b = bg.getContext('2d');
+      const base = b.createLinearGradient(0, 0, 0, H);
+      base.addColorStop(0, '#16171a'); base.addColorStop(0.5, '#0a0a0c'); base.addColorStop(1, '#040405');
+      b.fillStyle = base; b.fillRect(0, 0, W, H);
+      // reflexo da luz do estúdio na pintura
+      const ref1 = b.createLinearGradient(W * 0.1, 0, W * 0.6, H);
+      ref1.addColorStop(0.35, 'rgba(255,255,255,0)'); ref1.addColorStop(0.47, 'rgba(255,255,255,.13)');
+      ref1.addColorStop(0.5, 'rgba(255,255,255,.22)'); ref1.addColorStop(0.53, 'rgba(255,255,255,.1)'); ref1.addColorStop(0.65, 'rgba(255,255,255,0)');
+      b.fillStyle = ref1; b.fillRect(0, 0, W, H);
+      const ref2 = b.createLinearGradient(W * 0.5, 0, W, H * 0.9);
+      ref2.addColorStop(0.55, 'rgba(255,196,0,0)'); ref2.addColorStop(0.62, 'rgba(255,196,0,.08)'); ref2.addColorStop(0.7, 'rgba(255,196,0,0)');
+      b.fillStyle = ref2; b.fillRect(0, 0, W, H);
+      const n = Math.min(240, Math.round((W * H) / (dpr * dpr) / 2300));
+      drops = Array.from({ length: n }, () => newDrop(false));
+    }
+    function drawDrop(d) {
+      const { x, y, r } = d;
+      ctx.fillStyle = 'rgba(0,0,0,.55)';
+      ctx.beginPath(); ctx.ellipse(x + r * 0.22, y + r * 0.3, r * 1.02, r * 0.98 * d.w, 0, 0, Math.PI * 2); ctx.fill();
+      const g = ctx.createRadialGradient(x - r * 0.25, y - r * 0.3, r * 0.1, x, y, r);
+      g.addColorStop(0, 'rgba(255,255,255,.03)'); g.addColorStop(0.75, 'rgba(255,255,255,.06)'); g.addColorStop(1, 'rgba(255,255,255,.28)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(x, y, r, r * d.w, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,.22)';
+      ctx.beginPath(); ctx.ellipse(x + r * 0.32, y + r * 0.42, r * 0.38, r * 0.2, -0.5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,.95)';
+      ctx.beginPath(); ctx.ellipse(x - r * 0.38, y - r * 0.42, r * 0.24, r * 0.15, -0.6, 0, Math.PI * 2); ctx.fill();
+    }
+    function frame(now) {
+      raf = requestAnimationFrame(frame);
+      if (!visible || !W) return;
+      // Sem mouse por 2,5s: uma "mão invisível" passa sozinha
+      let mx = mouse.x, my = mouse.y;
+      if (now - mouse.t > 2500) {
+        const k = now / 2600;
+        mx = W * (0.5 + 0.38 * Math.sin(k)); my = H * (0.5 + 0.34 * Math.sin(k * 1.7 + 1));
+      }
+      ctx.drawImage(bg, 0, 0);
+      const R0 = 130 * dpr;
+      for (const d of drops) {
+        const dx = d.x - mx, dy = d.y - my, dist = Math.hypot(dx, dy) || 1;
+        if (dist < R0) { const f = (1 - dist / R0) * 2.2 * dpr; d.vx += (dx / dist) * f; d.vy += (dy / dist) * f; }
+        if (d.r > 8 * dpr) d.vy += 0.035 * dpr * (d.r / (10 * dpr));
+        d.vx *= 0.88; d.vy *= 0.88; d.x += d.vx; d.y += d.vy;
+        if (d.y - d.r > H || d.x < -40 * dpr || d.x > W + 40 * dpr || d.y < -H * 0.5) Object.assign(d, newDrop(true));
+        drawDrop(d);
+      }
+    }
+    const onMove = (e) => { const r = canvas.getBoundingClientRect(); mouse = { x: (e.clientX - r.left) * dpr, y: (e.clientY - r.top) * dpr, t: performance.now() }; };
+    const onLeave = () => { mouse = { x: -9999, y: -9999, t: 0 }; };
+    canvas.addEventListener('pointermove', onMove);
+    canvas.addEventListener('pointerdown', onMove);
+    canvas.addEventListener('pointerleave', onLeave);
+    const ro = new ResizeObserver(setup); ro.observe(canvas);
+    const io = new IntersectionObserver(([en]) => { visible = en.isIntersecting; }); io.observe(canvas);
+    raf = requestAnimationFrame(frame);
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); canvas.removeEventListener('pointermove', onMove); canvas.removeEventListener('pointerdown', onMove); canvas.removeEventListener('pointerleave', onLeave); };
+  }, []);
+  return <canvas ref={ref} className={`touch-pan-y ${className}`} role="img" aria-label="Gotas de água escorrendo de uma pintura com coating cerâmico" />;
+}
+
+function Coating() {
+  const benefits = [
+    ['Hidrofóbico', 'A água forma gotas e escorre, levando a sujeira junto.'],
+    ['Proteção UV', 'Ajuda a evitar que a pintura desbote e oxide com o sol.'],
+    ['Limpeza fácil', 'Sujeira, piche e fuligem aderem menos ao verniz.'],
+  ];
+  return (
+    <section id="coating" className="relative overflow-hidden border-y border-white/[.06] bg-carbon py-28 md:py-36">
+      <div className="mx-auto grid max-w-[1280px] items-center gap-14 px-5 md:px-8 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <Reveal><Eyebrow>Coating cerâmico</Eyebrow></Reveal>
+          <h2 className="mt-5 font-display text-[clamp(46px,6.4vw,88px)] font-black uppercase leading-[.88] text-white">
+            <Reveal as="span" className="block">A água</Reveal>
+            <Reveal as="span" delay={0.1} className="block italic text-volt">não gruda.</Reveal>
+          </h2>
+          <Reveal delay={0.15} className="mt-6 max-w-[42ch] text-lg leading-relaxed text-mist">
+            Com a superfície hidrofóbica, a água forma gotas com ângulo de contato acima de 90° e escorre pela lataria.
+            Passe o mouse (ou o dedo) no painel e veja como ela foge.
+          </Reveal>
+          <div className="mt-10 grid gap-3">
+            {benefits.map(([t, d], i) => (
+              <Reveal key={t} delay={0.2 + i * 0.08}>
+                <div className="group flex items-start gap-4 rounded-2xl border border-white/[.07] bg-white/[.02] p-5 transition-colors hover:border-volt/40">
+                  <span className="mt-1 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-volt/10 text-volt transition-colors group-hover:bg-volt group-hover:text-asphalt">
+                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><path d="M12 3c-3.5 5-6 8.4-6 11.5a6 6 0 0 0 12 0C18 11.4 15.5 8 12 3Z" /></svg>
+                  </span>
+                  <div>
+                    <p className="font-display text-2xl font-bold uppercase text-white">{t}</p>
+                    <p className="mt-1 text-[15px] text-mist">{d}</p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+        <Reveal delay={0.1} y={70} className="lg:col-span-7">
+          <div className="relative overflow-hidden rounded-[32px] border border-white/10 shadow-deep">
+            <WaterBeads className="block aspect-[4/5] w-full sm:aspect-[5/4] lg:aspect-[4/4.4]" />
+            <div className="pointer-events-none absolute left-5 top-5 flex items-center gap-2 rounded-full border border-white/15 bg-black/50 px-3 py-1.5 backdrop-blur">
+              <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-volt opacity-70" /><span className="relative inline-flex h-2 w-2 rounded-full bg-volt" /></span>
+              <span className="font-hud text-[11px] uppercase tracking-[.25em] text-white">Interativo</span>
+            </div>
+            <div className="pointer-events-none absolute bottom-5 right-5 rounded-xl border border-white/10 bg-black/55 px-4 py-3 text-right backdrop-blur">
+              <p className="font-hud text-[10px] uppercase tracking-[.3em] text-mist">Ângulo de contato</p>
+              <p className="font-hud text-2xl font-semibold text-white">&gt; 90<span className="text-volt">°</span></p>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Processo: um carrinho percorre a estrada conforme o scroll          */
+/* ------------------------------------------------------------------ */
+const STEPS = [
+  ['Avaliação', 'Inspeção da pintura, rodas e acabamentos com luz dedicada. Aqui definimos o serviço certo para o seu carro.'],
+  ['Lavagem e descontaminação', 'Pré-lavagem, espuma, lavagem técnica e remoção dos contaminantes que a lavagem comum não tira.'],
+  ['Correção', 'Polimento em etapas (corte, refino e lustro) para eliminar defeitos e devolver cor e profundidade.'],
+  ['Proteção', 'Aplicação da proteção cerâmica sobre a pintura corrigida, com o tempo de cura respeitado.'],
+  ['Entrega', 'Conferência final com iluminação e orientações de lavagem para o brilho durar.'],
+];
+
+function TopCar() {
+  return (
+    <svg viewBox="0 0 40 72" className="h-[64px] w-[36px] drop-shadow-[0_8px_14px_rgba(0,0,0,.8)]" aria-hidden="true">
+      <rect x="0.5" y="11" width="6" height="13" rx="2.5" fill="#111" />
+      <rect x="33.5" y="11" width="6" height="13" rx="2.5" fill="#111" />
+      <rect x="0.5" y="47" width="6" height="13" rx="2.5" fill="#111" />
+      <rect x="33.5" y="47" width="6" height="13" rx="2.5" fill="#111" />
+      <rect x="4" y="2" width="32" height="68" rx="12" fill="#FFC400" />
+      <path d="M10 22 h20 l-2.5 -7 h-15 z" fill="#1a1a1c" />
+      <rect x="9.5" y="23" width="21" height="21" rx="4" fill="#E0A800" />
+      <path d="M9.5 45 h21 l-3 9 h-15 z" fill="#1a1a1c" />
+      <rect x="7" y="3.5" width="7" height="2.6" rx="1.2" fill="#ff3b30" />
+      <rect x="26" y="3.5" width="7" height="2.6" rx="1.2" fill="#ff3b30" />
+      <rect x="7" y="65.5" width="7" height="3" rx="1.4" fill="#fff" />
+      <rect x="26" y="65.5" width="7" height="3" rx="1.4" fill="#fff" />
+    </svg>
+  );
+}
+
+function Process() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 65%', 'end 65%'] });
+  const p = useSpring(scrollYProgress, { stiffness: 120, damping: 28 });
+  const top = useTransform(p, (v) => `${Math.max(0, Math.min(1, v)) * 100}%`);
+  return (
+    <section id="processo" className="relative overflow-x-clip py-28 md:py-36">
+      <div className="mx-auto grid max-w-[1280px] gap-14 px-5 md:px-8 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <div className="lg:sticky lg:top-28">
+            <Reveal><Eyebrow>Como trabalhamos</Eyebrow></Reveal>
+            <h2 className="mt-5 font-display text-[clamp(46px,6.4vw,88px)] font-black uppercase leading-[.88] text-white">
+              <Reveal as="span" className="block">Processo</Reveal>
+              <Reveal as="span" delay={0.1} className="block"><span className="text-outline-volt">sem atalhos.</span></Reveal>
+            </h2>
+            <Reveal delay={0.15} className="mt-6 max-w-[40ch] text-lg leading-relaxed text-mist">
+              Cinco etapas, na ordem certa. Pular uma delas é o que separa um brilho que dura semanas de um que dura meses.
+            </Reveal>
+            <Reveal delay={0.2} className="mt-8">
+              <Magnetic><BtnPrimary href={wa('Olá! Quero agendar uma avaliação do meu carro.')}><WhatsIcon />Agendar avaliação</BtnPrimary></Magnetic>
+            </Reveal>
+          </div>
+        </div>
+        <div ref={ref} className="relative min-w-0 lg:col-span-7">
+          {/* estrada */}
+          <div aria-hidden="true" className="absolute bottom-0 left-0 top-0 w-11 overflow-hidden md:w-[54px] rounded-full border border-white/10 bg-[#101013]">
+            <div className="road-dash absolute bottom-0 left-1/2 top-0 w-[3px] -translate-x-1/2 opacity-30" />
+            <motion.div style={{ height: top }} className="absolute left-1/2 top-0 w-[3px] -translate-x-1/2 bg-volt shadow-[0_0_14px_rgba(255,196,0,.8)]" />
+          </div>
+          <motion.div aria-hidden="true" style={{ top }} className="absolute left-[22px] z-10 md:left-[27px] -translate-x-1/2 -translate-y-1/2">
+            <div className="relative">
+              <TopCar />
+              <div className="absolute left-1/2 top-[60px] h-28 w-24 -translate-x-1/2 bg-[radial-gradient(ellipse_at_top,rgba(255,244,210,.4),transparent_70%)] [clip-path:polygon(30%_0,70%_0,100%_100%,0_100%)]" />
+            </div>
+          </motion.div>
+          <ol className="relative space-y-6 pl-16 md:pl-24">
+            {STEPS.map(([t, d], i) => (
+              <motion.li key={t} initial={{ opacity: 0.3, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ margin: '-45% 0px -45% 0px' }} transition={{ duration: 0.6, ease }}
+                className="relative rounded-3xl border border-white/[.07] bg-graphite/70 p-6 md:p-9">
+                <span aria-hidden="true" className="absolute -left-[48px] top-10 h-3 w-3 rounded-full border-2 border-volt bg-asphalt md:-left-[75px]" />
+                <div className="flex items-baseline gap-4">
+                  <span className="font-hud text-sm font-semibold text-volt">0{i + 1}</span>
+                  <h3 className="font-display text-[28px] leading-none font-extrabold uppercase text-white md:text-4xl">{t}</h3>
+                </div>
+                <p className="mt-3 max-w-[52ch] text-[16px] leading-relaxed text-mist">{d}</p>
+              </motion.li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Galeria com scroll horizontal                                       */
+/* ------------------------------------------------------------------ */
+// ar = proporção (largura / altura) de cada foto, para mostrar sem cortes
+const GALLERY = [
+  { img: IMG.hero, tag: 'Polimento', title: 'VW Jetta GLI', ar: 1500 / 2000 },
+  { video: true, tag: 'Estúdio', title: 'Porsche sob as luzes', ar: 720 / 1280 },
+  { img: IMG.painel, tag: 'Interior', title: 'Painel e console', ar: 1440 / 1920 },
+  { img: IMG.chevette, tag: 'Lavagem', title: 'Chevette: lavagem de chassi', ar: 640 / 850 },
+  { img: IMG.gts, tag: 'Proteção', title: 'VW GTS', ar: 640 / 1138 },
+  { img: IMG.bancos, tag: 'Interior', title: 'Bancos em couro', ar: 1440 / 1920 },
+  { img: IMG.rodaDepois, tag: 'Rodas', title: 'Roda e pneu', ar: 640 / 566 },
+  { img: IMG.motoDepois, tag: 'Motos', title: 'Aro raiado', ar: 640 / 428 },
+];
+
+function GalleryItem({ g, i }) {
+  return (
+    <figure style={{ aspectRatio: g.ar }} className="group relative h-[62vh] max-h-[640px] min-h-[340px] shrink-0 snap-center overflow-hidden rounded-[26px] border border-white/[.08] bg-graphite">
+      {g.video
+        ? <LoopVideo className="h-full w-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-110" />
+        : <img src={g.img} alt={g.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-110" />}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+      <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6">
+        <div>
+          <p className="font-hud text-[11px] uppercase tracking-[.3em] text-volt">{g.tag}</p>
+          <p className="mt-1 font-display text-3xl font-extrabold uppercase text-white">{g.title}</p>
+        </div>
+        <span className="font-hud text-sm text-white/50">{String(i + 1).padStart(2, '0')}/{String(GALLERY.length).padStart(2, '0')}</span>
+      </figcaption>
+    </figure>
+  );
+}
+
+function Gallery() {
+  const desktop = useMedia('(min-width: 1024px)');
+  const sec = useRef(null), track = useRef(null);
+  const [dist, setDist] = useState(0);
+  useEffect(() => {
+    if (!desktop) return;
+    const m = () => track.current && setDist(Math.max(0, track.current.scrollWidth - window.innerWidth));
+    m(); const t = setTimeout(m, 600);
+    window.addEventListener('resize', m);
+    return () => { window.removeEventListener('resize', m); clearTimeout(t); };
+  }, [desktop]);
+  const { scrollYProgress } = useScroll({ target: sec, offset: ['start start', 'end end'] });
+  const x = useTransform(scrollYProgress, (v) => -v * dist);
+  const bar = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+
+  const head = (
+    <div className="mx-auto flex w-full max-w-[1280px] items-end justify-between gap-6 px-5 md:px-8">
+      <div>
+        <Reveal><Eyebrow>Galeria</Eyebrow></Reveal>
+        <h2 className="mt-4 font-display text-[clamp(46px,6.4vw,88px)] font-black uppercase leading-[.88] text-white">
+          Na garagem<span className="text-volt">.</span>
+        </h2>
+      </div>
+      <a href={INSTAGRAM} target="_blank" rel="noopener" className="hidden items-center gap-2 rounded-full border border-white/15 px-5 py-3 font-semibold text-white transition-colors hover:border-volt hover:text-volt md:inline-flex">
+        <InstaIcon /> @streetdetailjaragua
+      </a>
+    </div>
+  );
+
+  if (!desktop) {
+    return (
+      <section id="galeria" className="py-24">
+        {head}
+        <div className="no-scrollbar mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4">
+          {GALLERY.map((g, i) => <GalleryItem key={g.title} g={g} i={i} />)}
+        </div>
+        <div className="mt-6 px-5">
+          <a href={INSTAGRAM} target="_blank" rel="noopener" className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-3 font-semibold text-white"><InstaIcon /> Ver mais no Instagram</a>
+        </div>
+      </section>
+    );
+  }
+  return (
+    <section id="galeria" ref={sec} className="relative" style={{ height: `calc(100vh + ${dist}px)` }}>
+      <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden pt-16">
+        {head}
+        <motion.div ref={track} style={{ x }} className="mt-10 flex w-max gap-6 px-8">
+          {GALLERY.map((g, i) => <GalleryItem key={g.title} g={g} i={i} />)}
+        </motion.div>
+        <div className="mx-auto mt-8 h-[2px] w-[min(420px,60vw)] overflow-hidden rounded-full bg-white/10">
+          <motion.div style={{ scaleX: bar }} className="h-full origin-left bg-volt" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Ficha técnica (diferenciais)                                        */
+/* ------------------------------------------------------------------ */
+const SPECS = [
+  ['Atendimento', 'Com hora marcada', 'Sem fila. Seu carro tem o tempo que o serviço pede.'],
+  ['Produtos', 'Linha profissional', 'Lavagem, polimento e proteção com produtos próprios para estética automotiva.'],
+  ['Inspeção', 'Com luz dedicada', 'Defeitos de pintura só aparecem com a iluminação certa.'],
+  ['Contato', 'Direto no WhatsApp', 'Você fala com quem cuida do seu carro e acompanha cada etapa.'],
+];
+
+function Specs() {
+  return (
+    <section className="relative border-y border-white/[.06] bg-carbon py-24 md:py-28">
+      <div className="mx-auto max-w-[1280px] px-5 md:px-8">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <Reveal><Eyebrow>Ficha técnica</Eyebrow></Reveal>
+            <h2 className="mt-4 font-display text-[clamp(40px,5vw,68px)] font-black uppercase leading-[.9] text-white">Por que a Street Detail</h2>
+          </div>
+          <Reveal className="font-hud text-xs uppercase tracking-[.3em] text-mist">Modelo · Street Detail / Jaraguá</Reveal>
+        </div>
+        <div className="mt-12 border-t border-white/10">
+          {SPECS.map(([k, v, d], i) => (
+            <Reveal key={k} delay={i * 0.06}>
+              <div className="group grid gap-2 border-b border-white/10 py-6 transition-colors hover:bg-white/[.02] md:grid-cols-12 md:items-baseline md:gap-6 md:px-4">
+                <p className="font-hud text-xs uppercase tracking-[.3em] text-mist md:col-span-3">{k}</p>
+                <p className="font-display text-3xl font-extrabold uppercase text-white transition-colors group-hover:text-volt md:col-span-4 md:text-4xl">{v}</p>
+                <p className="text-[15.5px] text-mist md:col-span-5">{d}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Dúvidas                                                             */
+/* ------------------------------------------------------------------ */
+const FAQ = [
+  ['Qual a diferença entre lavagem comum e lavagem premium detalhada?', 'A lavagem detalhada usa técnicas e produtos que evitam riscar a pintura e chega aos pontos que normalmente ficam esquecidos: rodas por dentro, caixas de roda, frisos, emblemas e acabamentos.'],
+  ['O polimento técnico remove todos os riscos?', 'Remove riscos superficiais, swirls e oxidação. Riscos profundos, que atravessam o verniz, podem ser suavizados, mas às vezes pedem retoque de pintura. Por isso fazemos a avaliação antes.'],
+  ['Quanto tempo dura o coating cerâmico?', 'Depende do produto escolhido, do uso do carro e da manutenção. Na avaliação indicamos a melhor opção para o seu caso e explicamos como manter a proteção por mais tempo.'],
+  ['Quanto tempo meu carro fica com vocês?', 'Varia conforme o serviço e o estado do carro. A lavagem detalhada é feita no mesmo dia; polimento e coating levam mais tempo. Informamos o prazo no agendamento.'],
+  ['Como faço para agendar?', 'Chame no WhatsApp pelo botão desta página. Se mandar fotos do carro, já adiantamos uma avaliação.'],
+];
+
+function Faq() {
+  const [open, setOpen] = useState(0);
+  return (
+    <section id="duvidas" className="py-28 md:py-36">
+      <div className="mx-auto grid max-w-[1280px] gap-12 px-5 md:px-8 lg:grid-cols-12">
+        <div className="lg:col-span-4">
+          <Reveal><Eyebrow>Dúvidas</Eyebrow></Reveal>
+          <h2 className="mt-5 font-display text-[clamp(46px,5.6vw,80px)] font-black uppercase leading-[.88] text-white">Perguntas<br /><span className="text-volt">comuns.</span></h2>
+          <Reveal delay={0.1} className="mt-5 max-w-[34ch] text-lg text-mist">Não achou a sua? Chama no WhatsApp que a gente explica.</Reveal>
+        </div>
+        <div className="space-y-3 lg:col-span-8">
+          {FAQ.map(([q, a], i) => {
+            const isOpen = open === i;
+            return (
+              <Reveal key={q} delay={i * 0.05}>
+                <div className={`overflow-hidden rounded-2xl border transition-colors duration-300 ${isOpen ? 'border-volt/40 bg-graphite' : 'border-white/[.08] bg-carbon hover:border-white/20'}`}>
+                  <button id={`faq-${i}`} onClick={() => setOpen(isOpen ? -1 : i)} aria-expanded={isOpen}
+                    className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left">
+                    <span className="text-[17px] font-semibold text-white">{q}</span>
+                    <motion.span animate={{ rotate: isOpen ? 45 : 0 }} transition={{ duration: 0.3, ease }}
+                      className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-xl ${isOpen ? 'bg-volt text-asphalt' : 'bg-volt/10 text-volt'}`}>+</motion.span>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4, ease }}>
+                        <p className="max-w-[70ch] px-6 pb-6 text-[16px] leading-relaxed text-mist">{a}</p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Chamada final                                                       */
+/* ------------------------------------------------------------------ */
+function FinalCta() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1.3, 1.15]);
+  const vy = useTransform(scrollYProgress, [0, 1], [80, -80]);
+  const vr = useTransform(scrollYProgress, [0, 1], [4, -3]);
+  return (
+    <section id="contato" ref={ref} className="relative overflow-hidden py-28 md:py-36">
+      <motion.img src={IMG.chevette} alt="" aria-hidden="true" loading="lazy" style={{ y, scale }}
+        className="absolute inset-0 h-full w-full object-cover opacity-50 blur-md" />
+      <div className="absolute inset-0 bg-gradient-to-b from-asphalt via-asphalt/60 to-asphalt" />
+      <div className="absolute inset-0 bg-gradient-to-r from-asphalt via-asphalt/70 to-asphalt/30" />
+      <div className="relative mx-auto grid max-w-[1280px] items-center gap-14 px-5 md:px-8 lg:grid-cols-12">
+        <div className="lg:col-span-7">
+          <Reveal><Eyebrow>Agende agora</Eyebrow></Reveal>
+          <h2 className="mt-5 font-display text-[clamp(54px,8.4vw,128px)] font-black uppercase leading-[.85] text-white">
+            <Reveal as="span" className="block">Seu carro</Reveal>
+            <Reveal as="span" delay={0.1} className="block italic"><span className="shine-volt pr-[.06em]">brilhando</span></Reveal>
+            <Reveal as="span" delay={0.2} className="block">de novo.</Reveal>
+          </h2>
+          <Reveal delay={0.25} className="mt-6 max-w-[44ch] text-lg text-chrome/85">
+            Mande o modelo do carro e o serviço que procura. Respondemos com o orçamento e o melhor horário.
+          </Reveal>
+          <Reveal delay={0.3} className="mt-9">
+            <Magnetic strength={0.4}>
+              <BtnPrimary href={wa()} className="px-9 py-5 text-lg"><WhatsIcon className="h-6 w-6" />Chamar no WhatsApp</BtnPrimary>
+            </Magnetic>
+          </Reveal>
+          <Reveal delay={0.35} className="mt-12">
+            <ul className="grid gap-px overflow-hidden rounded-[24px] border border-white/10 bg-white/10 sm:grid-cols-3">
+              {[
+                ['Endereço', <span>{ENDERECO}</span>],
+                ['Horário', <span>{HORARIO.map((h) => <span key={h} className="block">{h}</span>)}</span>],
+                ['Instagram', <a href={INSTAGRAM} target="_blank" rel="noopener" className="inline-flex items-center gap-2 break-all hover:text-volt"><InstaIcon className="h-4 w-4 shrink-0" />@streetdetailjaragua</a>],
+              ].map(([k, v]) => (
+                <li key={k} className="min-w-0 bg-asphalt/85 px-5 py-5 backdrop-blur-xl">
+                  <p className="font-hud text-[11px] uppercase tracking-[.3em] text-volt">{k}</p>
+                  <div className="mt-1.5 text-[15.5px] leading-snug text-white">{v}</div>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+        <motion.div style={{ y: vy, rotate: vr }} className="relative mx-auto w-full max-w-[360px] lg:col-span-5 lg:max-w-[380px]">
+          <div className="relative aspect-[9/16] overflow-hidden rounded-[34px] border border-white/15 bg-carbon shadow-[0_50px_100px_-30px_rgba(0,0,0,.9),0_0_80px_-20px_rgba(255,196,0,.25)]">
+            <LoopVideo className="absolute inset-0 h-full w-full object-cover" />
+            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/80 to-transparent" />
+            <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between">
+              <img src={IMG.logo} alt="" className="h-9 w-auto" />
+              <span className="font-hud text-[10px] uppercase tracking-[.25em] text-white/70">Nosso estúdio</span>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="relative overflow-hidden border-t border-white/[.07] pt-16">
+      <div className="mx-auto flex max-w-[1280px] flex-col justify-between gap-8 px-5 md:flex-row md:items-center md:px-8">
+        <Logo />
+        <nav className="flex flex-wrap gap-x-7 gap-y-2 text-mist" aria-label="Rodapé">
+          {NAV.map(([h, l]) => <a key={h} href={h} className="hover:text-white">{l}</a>)}
+        </nav>
+      </div>
+      <p aria-hidden="true" className="text-outline mt-10 select-none whitespace-nowrap text-center font-display text-[15.5vw] font-black uppercase italic leading-[.8]">Street Detail</p>
+      <div className="mx-auto max-w-[1280px] border-t border-white/[.07] px-5 py-6 text-sm text-mist md:px-8">
+        © {new Date().getFullYear()} Street Detail · Estética Automotiva · Jaraguá
+      </div>
+    </footer>
+  );
+}
+
+function WhatsFloat() {
+  const [show, setShow] = useState(false);
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, 'change', (v) => setShow(v > 700));
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.a href={wa()} target="_blank" rel="noopener" aria-label="Falar no WhatsApp"
+          initial={{ scale: 0, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} exit={{ scale: 0 }} transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+          className="fixed bottom-[max(20px,env(safe-area-inset-bottom))] right-[max(20px,env(safe-area-inset-right))] z-[85] grid h-16 w-16 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_14px_34px_-8px_rgba(37,211,102,.7)]">
+          <span className="absolute inset-0 animate-ping rounded-full bg-[#25D366] opacity-30" />
+          <WhatsIcon className="relative h-8 w-8" />
+        </motion.a>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* App                                                                 */
+/* ------------------------------------------------------------------ */
+// Teste: index.html?y=1500 pula a intro e abre a página já rolada
+const TEST_Y = new URLSearchParams(location.search).get('y');
+
+function App() {
+  const reduce = useReduce();
+  const [intro, setIntro] = useState(TEST_Y === null);
+  useSmoothScroll(!reduce && TEST_Y === null);
+  useEffect(() => {
+    document.getElementById('boot')?.remove();
+    if (TEST_Y !== null) { document.body.style.marginTop = `-${+TEST_Y}px`; return; }
+    const t = setTimeout(() => setIntro(false), reduce ? 0 : 1700);
+    return () => clearTimeout(t);
+  }, []);
+  const ready = !intro;
+  return (
+    <MotionConfig reducedMotion={RESPECT_REDUCED_MOTION ? 'user' : 'never'}>
+      <Intro show={intro} />
+      <ScrollProgress />
+      <Header ready={ready} />
+      <main>
+        <Hero ready={ready} />
+        <SpeedStrip />
+        <Services />
+        <BeforeAfter />
+        <Coating />
+        <Process />
+        <Gallery />
+        <Specs />
+        <Faq />
+        <FinalCta />
+      </main>
+      <Footer />
+      <WhatsFloat />
+    </MotionConfig>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
